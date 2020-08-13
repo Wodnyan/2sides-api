@@ -39,7 +39,7 @@ const FoxSchema = new Schema({
 });
 
 const CnnSchema = new Schema({
-    date: { type: Date, default: getDate(new Date(), "/") },
+    date: { type: Date, default: getDate(new Date(), "-") },
     news: [CnnArticleSchema],
 });
 

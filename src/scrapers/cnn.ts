@@ -22,7 +22,7 @@ export default async function getCnnData() {
                 "https://edition.cnn.com" +
                 $article.find(".media > a").attr("href");
 
-            const date = getDate(new Date(), "/");
+            const date = getDate(new Date(), "-");
 
             const articleObj = {
                 article_link: articleLink,
@@ -31,13 +31,13 @@ export default async function getCnnData() {
                 image_small: imageSrcSmall,
                 image_large: imageSrcLarge,
             };
-            CnnModel.updateOne(
-                { date },
-                { $push: { news: articleObj } },
-                { upsert: true, new: true },
-                (err, result) => {
-                    if (err) return console.error(err);
-                }
-            );
+            // CnnModel.updateOne(
+            //     { date },
+            //     { $push: { news: articleObj } },
+            //     { upsert: true, new: true },
+            //     (err, result) => {
+            //         if (err) return console.error(err);
+            //     }
+            // );
         });
 }
