@@ -24,20 +24,20 @@ export default async function getCnnData() {
 
             const date = getDate(new Date(), "-");
 
-            const articleObj = {
+            const update = {
                 article_link: articleLink,
                 headline,
                 image_description: imageAlt,
                 image_small: imageSrcSmall,
                 image_large: imageSrcLarge,
             };
-            // CnnModel.updateOne(
-            //     { date },
-            //     { $push: { news: articleObj } },
-            //     { upsert: true, new: true },
-            //     (err, result) => {
-            //         if (err) return console.error(err);
-            //     }
-            // );
+            CnnModel.updateOne(
+                { date },
+                { $push: { articles: update } },
+                { upsert: true, new: true },
+                (err, result) => {
+                    if (err) return console.error(err);
+                }
+            );
         });
 }
