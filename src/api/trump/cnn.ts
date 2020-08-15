@@ -1,11 +1,12 @@
 import express from "express";
+import { checkDateFormating } from "../../middlewares/middlewares";
 import { CnnModel } from "../../db/db";
 
 const router = express.Router();
 
 //Get All
-router.get("/cnn", (req, res) => {
-    CnnModel.find({}, "date news", (err, articles) => {
+router.get("/", (req, res) => {
+    CnnModel.find({}, "date articles", (err, articles) => {
         if (err) return console.error(err);
         res.json({
             message: "Succesfully returned articles",
@@ -14,13 +15,18 @@ router.get("/cnn", (req, res) => {
     });
 });
 //Get One
-router.get("/cnn/:date", (req, res) => {
+router.get("/:date", checkDateFormating, (req, res) => {
     const { date } = req.params;
-    //TODO: Check if date is formated correctly
+    //Check if date is formated correctly and it's valid.
     CnnModel.findOne({ date }, (err, article) => {
         if (err) return console.error(err);
+        if (!article) {
+            return res.status(404).json({
+                message: "Couldn't find articles on that date",
+            });
+        }
         res.json({
-            message: "Succesfully returned article",
+            message: "Succesfully returned articles",
             article,
         });
     });
