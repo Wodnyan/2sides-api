@@ -19,9 +19,9 @@ mongoose.connect(
 const { Schema } = mongoose;
 
 const FoxArticleSchema = new Schema({
-    header: String,
-    image_large: String,
-    image_small: String,
+    headline: String,
+    article_link: String,
+    image: String,
     image_description: String,
 });
 
@@ -34,13 +34,14 @@ const CnnArticleSchema = new Schema({
 });
 
 const FoxSchema = new Schema({
-    date: { type: Date, required: true },
-    news: [FoxArticleSchema],
+    date: { type: Date, default: getDate(new Date(), "-") },
+    articles: [FoxArticleSchema],
 });
 
 const CnnSchema = new Schema({
     date: { type: Date, default: getDate(new Date(), "-") },
-    news: [CnnArticleSchema],
+    articles: [CnnArticleSchema],
 });
 
 export const CnnModel = model("cnn_article", CnnSchema);
+export const FoxModel = model("fox_article", FoxSchema);

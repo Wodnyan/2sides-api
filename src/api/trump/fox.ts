@@ -1,28 +1,24 @@
 import express from "express";
+import { FoxModel } from "../../db/db";
 import { checkDateFormating } from "../../middlewares/middlewares";
-import { CnnModel } from "../../db/db";
 
 const router = express.Router();
 
-//Get All
 router.get("/", (req, res) => {
-    CnnModel.find({}, "date articles", (err, articles) => {
-        if (err) return console.error(err);
-        res.json({
-            message: "Succesfully returned articles",
-            articles,
-        });
+    FoxModel.find({}, "date articles", (err, articles) => {
+        if (err) return res.sendStatus(500);
+        res.json({ message: "Succesfully returned articles", articles });
     });
 });
-//Get One
+
 router.get("/:date", checkDateFormating, (req, res) => {
     const { date } = req.params;
-    CnnModel.findOne({ date }, (err, article) => {
+    FoxModel.findOne({ date }, (err, article) => {
         if (err) return console.error(err);
         if (!article) {
-            return res.status(404).json({
-                message: "Couldn't find articles on that date",
-            });
+            return res
+                .status(404)
+                .json({ message: "Couldn't find articles on that date" });
         }
         res.json({
             message: "Succesfully returned articles",
