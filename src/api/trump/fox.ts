@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 router.get("/:date", checkDateFormating, (req, res) => {
     const { date } = req.params;
-    FoxModel.findOne({ date }, (err, article) => {
+    FoxModel.findOne({ date }, "date articles", (err, article) => {
         if (err) return console.error(err);
         if (!article) {
             return res

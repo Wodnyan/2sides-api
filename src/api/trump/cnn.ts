@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 //Get One
 router.get("/:date", checkDateFormating, (req, res) => {
     const { date } = req.params;
-    CnnModel.findOne({ date }, (err, article) => {
+    CnnModel.findOne({ date }, "date articles", (err, article) => {
         if (err) return console.error(err);
         if (!article) {
             return res.status(404).json({
