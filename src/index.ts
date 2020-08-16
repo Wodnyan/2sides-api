@@ -18,4 +18,8 @@ app.use(cors());
 
 app.use("/api/v1", api);
 
+app.get("/", (req, res) => {
+    res.send("Hello world");
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
